@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Disease ML Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      width: 100%;
+    }
+    .question {
+      margin: 20px 0;
+    }
+    .feedback {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Heart Disease Prediction Quiz</h1>
+    <div id="quiz"></div>
+    <button class="btn btn-primary mt-3" onclick="checkAnswers()">Submit All</button>
+  </div>
+
+  <script>
+    const rawQuestions = [
+      {
+        question: "What is the goal of the heart disease prediction project?",
+        correct: "To predict if a patient has heart disease",
+        distractors: ["To collect weather data", "To detect diabetes"]
+      },
+      {
+        question: "Why do we scale the features before training?",
+        correct: "To ensure all features are on the same scale",
+        distractors: ["To clean missing values", "To increase dataset size"]
+      },
+      {
+        question: "Which model was used in the project?",
+        correct: "Logistic Regression",
+        distractors: ["Decision Tree", "Random Forest"]
+      },
+      {
+        question: "Which column is the prediction target?",
+        correct: "target",
+        distractors: ["age", "chol"]
+      },
+      {
+        question: "What is the purpose of train-test split?",
+        correct: "To evaluate model performance on unseen data",
+        distractors: ["To balance classes", "To remove outliers"]
+      },
+      {
+        question: "Which library is used for data scaling?",
+        correct: "sklearn.preprocessing",
+        distractors: ["matplotlib.pyplot", "pandas.io"]
+      },
+      {
+        question: "What metric helps evaluate classification performance?",
+        correct: "Classification Report",
+        distractors: ["Line Plot", "Word Cloud"]
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questions = rawQuestions.map(q => {
+      const options = [...q.distractors, q.correct];
+      shuffle(options);
+      return {
+        question: q.question,
+        options: options,
+        answer: options.indexOf(q.correct)
+      };
+    });
+
+    const quizDiv = document.getElementById("quiz");
+
+    questions.forEach((q, index) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+      qDiv.innerHTML = `<strong>${index + 1}. ${q.question}</strong>`;
+
+      const optionsDiv = document.createElement("div");
+      optionsDiv.className = "options";
+
+      q.options.forEach((opt, i) => {
+        const id = `q${index}_opt${i}`;
+        optionsDiv.innerHTML += `
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="q${index}" value="${i}" id="${id}" onchange="checkSingleAnswer(${index}, ${i})">
+            <label class="form-check-label" for="${id}">${opt}</label>
+          </div>`;
+      });
+
+      const feedback = document.createElement("span");
+      feedback.id = `feedback${index}`;
+      feedback.className = "feedback ms-3";
+
+      qDiv.appendChild(optionsDiv);
+      qDiv.appendChild(feedback);
+      quizDiv.appendChild(qDiv);
+    });
+
+    function checkSingleAnswer(index, selectedValue) {
+      const feedback = document.getElementById(`feedback${index}`);
+      if (selectedValue === questions[index].answer) {
+        feedback.textContent = '✔ Correct';
+        feedback.className = 'feedback correct';
+      } else {
+        feedback.textContent = '✘ Try again';
+        feedback.className = 'feedback incorrect';
+      }
+    }
+
+    function checkAnswers() {
+      questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name='q${index}']:checked`);
+        const feedback = document.getElementById(`feedback${index}`);
+        if (selected) {
+          const selectedValue = parseInt(selected.value);
+          if (selectedValue === q.answer) {
+            feedback.textContent = '✔ Correct';
+            feedback.className = 'feedback correct';
+          } else {
+            feedback.textContent = '✘ Try again';
+            feedback.className = 'feedback incorrect';
+          }
+        } else {
+          feedback.textContent = '✘ Please select an answer';
+          feedback.className = 'feedback incorrect';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

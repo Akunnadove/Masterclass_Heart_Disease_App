@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Disease Prediction Visualizer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+    }
+    .box {
+      padding: 20px;
+      border: 3px solid black;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      width: 280px;
+      text-align: center;
+    }
+    .arrow {
+      font-size: 30px;
+      color: #007bff;
+    }
+    pre {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: left;
+      font-size: 16px;
+      width: 420px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="text-center">
+
+  <div class="container mt-4">
+    <h1 class="text-primary fw-bold">Heart Disease Prediction Visualizer</h1>
+    <p class="fs-5 text-dark">Follow the steps to understand how we predict heart disease using Python!</p>
+
+    <div class="d-flex flex-column align-items-center">
+      <div class="box bg-success text-white shadow">Start Project 🎬</div>
+      <div class="arrow">⬇️</div>
+
+      <div class="box bg-warning text-dark shadow">Import Dataset 📁</div>
+      <pre>df = pd.read_csv("heart.csv")</pre>
+      <div class="arrow">⬇️</div>
+
+      <div class="box bg-info text-white shadow">Explore Data 🔍</div>
+      <pre>df.head()
+df.describe()</pre>
+      <div class="arrow">⬇️</div>
+
+      <div class="box bg-primary text-white shadow">Split Features & Target 🧪</div>
+      <pre>X = df.drop("target", axis=1)
+y = df["target"]</pre>
+      <div class="arrow">⬇️</div>
+
+      <div class="box bg-secondary text-white shadow">Scale the Data 📏</div>
+      <pre>scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)</pre>
+      <div class="arrow">⬇️</div>
+
+      <div class="box bg-danger text-white shadow">Train the Model 🧠</div>
+      <pre>model = LogisticRegression()
+model.fit(X_scaled, y)</pre>
+      <div class="arrow">⬇️</div>
+
+      <div class="box text-white shadow" style="background-color: #800080;">Evaluate the Model 📊</div>
+      <pre>print(classification_report(y, model.predict(X_scaled)))</pre>
+      <div class="arrow">⬇️</div>
+
+      <div class="box bg-dark text-white shadow">End 🏁</div>
+    </div>
+  </div>
+
+  <script>
+    alert("Welcome! This site walks you through building a heart disease prediction project in Python!");
+  </script>
+
+</body>
+</html>

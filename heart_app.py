@@ -17,11 +17,8 @@ st.markdown("Enter patient data to predict the likelihood of heart disease.")
 st.sidebar.header("Patient Information")
 
 def user_input_features():
-    age = st.sidebar.slider('Age', int(data.age.min()), int(data.age.max()), 50)
     sex = st.sidebar.selectbox('Sex', ['Male', 'Female'])
     cp = st.sidebar.selectbox('Chest Pain Type (cp)', sorted(data.cp.unique()))
-    trestbps = st.sidebar.slider('Resting Blood Pressure (trestbps)', int(data.trestbps.min()), int(data.trestbps.max()), 120)
-    chol = st.sidebar.slider('Serum Cholestoral (chol)', int(data.chol.min()), int(data.chol.max()), 200)
     fbs = st.sidebar.selectbox('Fasting Blood Sugar > 120 mg/dl (fbs)', [0, 1])
     restecg = st.sidebar.selectbox('Resting ECG (restecg)', sorted(data.restecg.unique()))
     thalach = st.sidebar.slider('Max Heart Rate Achieved (thalach)', int(data.thalach.min()), int(data.thalach.max()), 150)
@@ -35,11 +32,8 @@ def user_input_features():
     sex_encoded = 1 if sex == 'Male' else 0
 
     features = {
-        'age': age,
         'sex': sex_encoded,
         'cp': cp,
-        'trestbps': trestbps,
-        'chol': chol,
         'fbs': fbs,
         'restecg': restecg,
         'thalach': thalach,
